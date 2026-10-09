@@ -24,6 +24,7 @@ public enum NotchState {
     case open
 }
 
+// Kept for source compatibility with the unused tab view sources.
 public enum NotchViews {
     case home
     case shelf

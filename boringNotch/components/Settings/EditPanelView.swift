@@ -37,18 +37,20 @@ struct EditPanelView: View {
 struct VisualEffectView: NSViewRepresentable {
     let material: NSVisualEffectView.Material
     let blendingMode: NSVisualEffectView.BlendingMode
+    var isEmphasized: Bool = true
     
     func makeNSView(context _: Context) -> NSVisualEffectView {
         let visualEffectView = NSVisualEffectView()
         visualEffectView.material = material
         visualEffectView.blendingMode = blendingMode
         visualEffectView.state = NSVisualEffectView.State.active
-        visualEffectView.isEmphasized = true
+        visualEffectView.isEmphasized = isEmphasized
         return visualEffectView
     }
     
     func updateNSView(_ visualEffectView: NSVisualEffectView, context _: Context) {
         visualEffectView.material = material
         visualEffectView.blendingMode = blendingMode
+        visualEffectView.isEmphasized = isEmphasized
     }
 }

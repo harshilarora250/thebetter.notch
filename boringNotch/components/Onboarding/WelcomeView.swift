@@ -21,10 +21,7 @@ struct WelcomeView: View {
                     .offset(y: -5)
                     .background(SparkleView().opacity(0.6))
                 VStack(spacing: 8) {
-                    Image("logo2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
+                    BetterNotchMark()
                         .padding(.bottom, 8)
                     Text("Better Notch")
                         .font(.system(.largeTitle, design: .default))
@@ -62,14 +59,12 @@ struct WelcomeView: View {
                 .padding(.top)
             }
             
-            Image("theboringteam")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 22)
+            Text("A calmer space for your music")
+                .font(.caption.weight(.medium))
+                .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .padding()
                 .padding(.bottom, 36)
-                .blendMode(.overlay)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea()
@@ -77,6 +72,56 @@ struct WelcomeView: View {
             VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
                 .ignoresSafeArea()
         }
+    }
+}
+
+private struct BetterNotchMark: View {
+    private let waveformHeights: [CGFloat] = [8, 15, 21, 13, 18, 9]
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 27, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.16, green: 0.21, blue: 0.32),
+                            Color(red: 0.07, green: 0.09, blue: 0.15),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+
+            Circle()
+                .fill(Color(red: 0.43, green: 0.73, blue: 0.91).opacity(0.34))
+                .frame(width: 52, height: 52)
+                .blur(radius: 24)
+                .offset(x: 26, y: -28)
+
+            RoundedRectangle(cornerRadius: 13, style: .continuous)
+                .fill(.black)
+                .frame(width: 66, height: 34)
+                .overlay {
+                    HStack(alignment: .center, spacing: 3) {
+                        ForEach(Array(waveformHeights.enumerated()), id: \.offset) { _, height in
+                            Capsule()
+                                .fill(Color(red: 0.72, green: 0.88, blue: 1.0))
+                                .frame(width: 3, height: height)
+                        }
+                    }
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: 13, style: .continuous)
+                        .strokeBorder(.white.opacity(0.14), lineWidth: 1)
+                }
+        }
+        .frame(width: 100, height: 100)
+        .overlay {
+            RoundedRectangle(cornerRadius: 27, style: .continuous)
+                .strokeBorder(.white.opacity(0.14), lineWidth: 1)
+        }
+        .shadow(color: .black.opacity(0.22), radius: 18, y: 8)
+        .accessibilityLabel("Better Notch")
     }
 }
 
